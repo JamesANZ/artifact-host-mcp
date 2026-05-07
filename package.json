@@ -1,0 +1,33 @@
+{
+  "name": "artifact-host-mcp",
+  "version": "0.1.0",
+  "description": "Cloudflare Worker MCP for publishing shareable artifacts",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "mcp",
+    "cloudflare-worker",
+    "artifact-host"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "hono": "^4.12.18",
+    "mime-types": "^3.0.2",
+    "nanoid": "^5.1.11",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260507.1",
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.88.0"
+  }
+}
