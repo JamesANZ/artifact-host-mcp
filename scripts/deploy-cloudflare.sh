@@ -20,6 +20,16 @@ if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
   exit 1
 fi
 
+if [[ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]]; then
+  CLOUDFLARE_ACCOUNT_ID="$(
+    npx wrangler whoami 2>/dev/null | awk -F'│' '/Account ID/ {getline; gsub(/^[[:space:]]*│[[:space:]]*|[[:space:]]*│[[:space:]]*$/, "", $2); print $2; exit}'
+  )"
+  if [[ -n "$CLOUDFLARE_ACCOUNT_ID" ]]; then
+    export CLOUDFLARE_ACCOUNT_ID
+    echo "Using Cloudflare account ${CLOUDFLARE_ACCOUNT_ID}"
+  fi
+fi
+
 if [[ ! -f .dev.vars ]]; then
   echo "Missing .dev.vars with OWNER_API_KEY=... (used for Wrangler secret + MCP Bearer)." >&2
   exit 1
