@@ -123,7 +123,7 @@ export async function handleMcpRequest(
   });
   const server = buildMcpServer(env, request);
   await server.connect(transport);
-  const response = await transport.handleRequest(request);
-  await server.close();
-  return response;
+  // Do not call server.close() here: closing the transport terminates the SSE
+  // body before the client can read initialize/tool responses (see SDK Hono example).
+  return transport.handleRequest(request);
 }

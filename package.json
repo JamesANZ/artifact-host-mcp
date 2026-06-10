@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
+    "deploy:cloudflare": "bash scripts/deploy-cloudflare.sh",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [

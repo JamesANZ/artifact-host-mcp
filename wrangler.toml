@@ -1,7 +1,13 @@
 name = "artifact-host-mcp"
 main = "src/index.ts"
 compatibility_date = "2026-05-07"
+compatibility_flags = ["nodejs_compat"]
 
 [[r2_buckets]]
 binding = "BUCKET"
 bucket_name = "artifact-host"
+
+# After first deploy, set your public origin so share links always use your domain
+# (optional if you only use the default *.workers.dev hostname from requests).
+# [vars]
+# BASE_URL = "https://artifact-host-mcp.your-subdomain.workers.dev"

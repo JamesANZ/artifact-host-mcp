@@ -9,6 +9,14 @@ import {
 import { shouldForceDownload } from "../lib/content-type";
 import type { ArtifactMeta, Env } from "../types";
 
+function responseContentType(stored: string): string {
+  const base = stored.split(";")[0]?.trim() ?? stored;
+  if (base.startsWith("text/") && !/;\s*charset=/i.test(stored)) {
+    return `${base}; charset=utf-8`;
+  }
+  return stored;
+}
+
 async function isExpired(meta: ArtifactMeta): Promise<boolean> {
   return (
     meta.expires_at !== null &&
@@ -56,8 +64,9 @@ export function createServeRouter() {
       return c.notFound();
     }
 
+    const contentType = responseContentType(artifact.meta.content_type);
     const headers = new Headers({
-      "Content-Type": artifact.meta.content_type,
+      "Content-Type": contentType,
     });
 
     if (shouldForceDownload(artifact.meta.content_type)) {
@@ -78,8 +87,9 @@ export function createServeRouter() {
       return c.notFound();
     }
 
+    const contentType = responseContentType(artifact.meta.content_type);
     const headers = new Headers({
-      "Content-Type": artifact.meta.content_type,
+      "Content-Type": contentType,
     });
 
     if (shouldForceDownload(artifact.meta.content_type)) {
@@ -100,8 +110,9 @@ export function createServeRouter() {
       return c.notFound();
     }
 
+    const contentType = responseContentType(artifact.meta.content_type);
     const headers = new Headers({
-      "Content-Type": artifact.meta.content_type,
+      "Content-Type": contentType,
       "Content-Disposition": `attachment; filename="${artifact.meta.filename}"`,
     });
 
